@@ -30,7 +30,7 @@ exports = module.exports = Base => class extends Base {
 			'home':              () => ('HOM'),
 			'ten_key':           op => ('NUM' + op.number),
 			'slow_search':       op => ('SCN' + op.direction
-											  + op.speed),
+			                                  + op.speed),
 			'mute':              op => ('MUT' + op.mute),
 			'auto_play':         op => ('APL' + op.suffix),
 			'pip_mark':          op => ('PMK' + op.suffix),
@@ -44,9 +44,9 @@ exports = module.exports = Base => class extends Base {
 			'fs_setting':        op => ('COO' + op.suffix),
 			'speaker_config':    op => ('SPC' + op.configuration),
 			'speaker_setting':   op => ('SPS' + op.type
-											  + op.size
-											  + Number(op.level).toFixed().replace(/^([+-]?)([0-9]{1,2})$/, (g, s, n) => ((s ? s : '+') + n.padStart(2, '0')))
-											  + Number(op.delay).toFixed().padStart(4, '0')),
+			                                  + op.size
+			                                  + Number(op.level).toFixed().replace(/^([+-]?)([0-9]{1,2})$/, (g, s, n) => ((s ? s : '+') + n.padStart(2, '0')))
+			                                  + Number(op.delay).toFixed().padStart(4, '0')),
 			'firmware_upgrade':  op => ('FWU' + op.suffix),
 			'hdmi_cec':          op => ('CCR' + op.suffix),
 			'factory_reset':     () => ('INI'),
