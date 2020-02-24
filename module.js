@@ -3,7 +3,8 @@ const TcpSocket           = require('../../tcp')
 const InstanceActions     = require('./action')
 const FeedbackDefinitions = require('./feedback')
 
-class Instance extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
+exports = module.exports = class Instance
+	extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
 
 	constructor (...args) {
 		super(...args)
@@ -14,7 +15,8 @@ class Instance extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
 		this.current  = -1
 		this.disc     = ''
 		this.playback = ''
-	
+
+		this.defineConst('REGEX_LEVEL_DB', '/^[+-]?[0-9]{1,2}$/')
 		this.actions()
 		this.feedbacks()
 	}
@@ -56,7 +58,7 @@ class Instance extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
 			{ name: 'remain:hour',   label: 'Remain Hour'        },
 			{ name: 'remain:minute', label: 'Remain Minute'      },
 			{ name: 'remain:second', label: 'Remain Second'      }
-		]);
+		])
 	}
 
 	destroy () {
@@ -76,16 +78,14 @@ class Instance extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
 	}
 
 	config_fields () {
-		return [
-			{
-				type:    'textinput',
-				id:      'address',
-				label:   'Device Address',
-				width:   12,
-				regex:   this.REGEX_IP,
-				tooltip: 'IP Address of the Blu-Ray Player.'
-			}
-		]
+		return [{
+			type:    'textinput',
+			id:      'address',
+			label:   'Device Address',
+			width:   12,
+			regex:   this.REGEX_IP,
+			tooltip: 'IP Address of the Blu-Ray Player.'
+		}]
 	}
 
 	updateConfig (config) {
@@ -183,5 +183,3 @@ class Instance extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
 		this.setVariable(name, (Number(number) || 0).toFixed().padStart(2, '0'))
 	}
 }
-
-exports = module.exports = Instance

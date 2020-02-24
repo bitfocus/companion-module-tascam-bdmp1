@@ -525,7 +525,7 @@ exports = module.exports = Base => class extends Base {
 						tooltip:  'Example: -01 = -1dB, +10 = +10dB',
 						id:       'level',
 						required: true,
-						regex:    '/^[+-]?[0-9]{1,2}$/'
+						regex:    this.REGEX_LEVEL_DB
 					},
 					{
 						type:     'number',
