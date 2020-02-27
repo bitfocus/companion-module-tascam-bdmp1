@@ -68,8 +68,8 @@ Only one client connection at a time can be made.
 ## Feedbacks
 | Feedback | Parameters |
 | --- | --- |
-| Disc Status | Disc Status (There is no disc media, There is disc media, Mounted media is unformatted, Disc tray is opening or open, Disc tray is closing or closed, Disc tray error) |
-| Status | Status (Play, Pause, Slow play reverse, Slow play forward, Search play reverse, Search play forward, Step play, FS play, Menu setting is displayed, Setup mode, Track/Root menu, Home menu) |
+| Disc Status | Disc Status (There is no disc media, There is disc media, Mounted media is unformatted, Disc tray is opening or open, Disc tray is closing or closed, Disc tray error), Negate Status, Foreground Color, Background Color, [Button Text] |
+| Status | Status (Play, Pause, Slow play reverse, Slow play forward, Search play reverse, Search play forward, Step play, FS play, Menu setting is displayed, Setup mode, Track/Root menu, Home menu), Negate Status, Foreground Color, Background Color, [Button Text] |
 
 * * *
 

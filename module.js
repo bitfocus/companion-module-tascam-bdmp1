@@ -98,14 +98,19 @@ exports = module.exports = class Instance
 	}
 
 	feedback (feedback) {
-		const options = feedback.options
-		const style   = { color: options.foreground, bgcolor: options.background }
+		const options  = feedback.options
+		const operator = options.negatestatus ? '!==' : '==='
+		const style    = { color: options.foreground, bgcolor: options.background }
+
+		if (options.buttontext) {
+			style.text = options.buttontext
+		}
 
 		switch (feedback.type) {
 			case 'disc':
-				return this.disc === options.disc ? style : {}
+				return eval('this.disc' + operator + 'options.disc') ? style : {}
 			case 'playback':
-				return this.playback === options.playback ? style : {}
+				return eval('this.playback' + operator + 'options.playback') ? style : {}
 			default:
 				return {}
 		}

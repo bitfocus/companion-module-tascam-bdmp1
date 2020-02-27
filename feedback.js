@@ -21,25 +21,37 @@ exports = module.exports = Base => class extends Base {
 						default:  'NC'
 					},
 					{
-						type:    'colorpicker',
-						label:   'Foreground Color',
-						id:      'foreground',
-						default: this.rgb(255, 255, 255)
+						type:     'checkbox',
+						label:    'Negate Status',
+						id:       'negatestatus',
+						default:  false
 					},
 					{
-						type:    'colorpicker',
-						label:   'Background Color',
-						id:      'background',
-						default: this.rgb(0, 0, 0)
-					}	
+						type:     'colorpicker',
+						label:    'Foreground Color',
+						id:       'foreground',
+						default:  this.rgb(255, 255, 255)
+					},
+					{
+						type:     'colorpicker',
+						label:    'Background Color',
+						id:       'background',
+						default:  this.rgb(0, 0, 0)
+					},
+					{
+						type:     'textinput',
+						label:    'Button Text',
+						id:       'buttontext',
+						required: false
+					}
 				]
 			},
 			'playback': {
-				label:   'Status',
+				label:   'Playback Status',
 				options: [
 					{
 						type:     'dropdown',
-						label:    'Status',
+						label:    'Playback Status',
 						id:       'playback',
 						required: true,
 						choices:  [
@@ -59,17 +71,29 @@ exports = module.exports = Base => class extends Base {
 						default:  'PL'
 					},
 					{
-						type:    'colorpicker',
-						label:   'Foreground Color',
-						id:      'foreground',
-						default: this.rgb(255, 255, 255)
+						type:     'checkbox',
+						label:    'Negate Status',
+						id:       'negatestatus',
+						default:  false
 					},
 					{
-						type:    'colorpicker',
-						label:   'Background Color',
-						id:      'background',
-						default: this.rgb(0, 0, 0)
-					}	
+						type:     'colorpicker',
+						label:    'Foreground Color',
+						id:       'foreground',
+						default:  this.rgb(255, 255, 255)
+					},
+					{
+						type:     'colorpicker',
+						label:    'Background Color',
+						id:       'background',
+						default:  this.rgb(0, 0, 0)
+					},
+					{
+						type:     'textinput',
+						label:    'Button Text',
+						id:       'buttontext',
+						required: false
+					}
 				]
 			}
 		})
