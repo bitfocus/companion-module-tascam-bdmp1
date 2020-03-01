@@ -58,7 +58,15 @@ exports = module.exports = class Instance
 			{ name: 'remain:hour',   label: 'Remain Hour'        },
 			{ name: 'remain:minute', label: 'Remain Minute'      },
 			{ name: 'remain:second', label: 'Remain Second'      }
-		])
+		]) 
+
+		;['track:total', 'track:number', 'group:total', 'group:number'].forEach(name => {
+			this.setNumber('0', name)
+		})
+
+		;['elapse', 'remain'].forEach(name => {
+			this.setTime('0000000', name)
+		})
 	}
 
 	destroy () {
