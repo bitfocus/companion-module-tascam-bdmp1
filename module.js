@@ -27,7 +27,7 @@ exports = module.exports = class Instance
 	}
 
 	initSocket () {
-		this.destroySocket()
+		this.closeSocket()
 
 		if (this.config.address) {
 			const socket = new TcpSocket(this.config.address, 9030)
@@ -43,6 +43,11 @@ exports = module.exports = class Instance
 				this.socket = null
 				this.stopRequest()
 			}).on('data', this.onDataReceived.bind(this))
+
+			this.destroySocket = () => {
+				socket.destroy()
+				delete this.destroySocket
+			}
 		}
 	}
 
@@ -70,10 +75,10 @@ exports = module.exports = class Instance
 	}
 
 	destroy () {
-		this.destroySocket()
+		this.closeSocket()
 	}
 
-	destroySocket () {
+	closeSocket () {
 		const socket = this.socket
 
 		if (socket) {
@@ -82,6 +87,8 @@ exports = module.exports = class Instance
 			socket.options.reconnect = false
 			socket.socket.end()
 			socket.destroy()
+		} else if (this.destroySocket) {
+			this.destroySocket()
 		}
 	}
 
