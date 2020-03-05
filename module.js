@@ -65,13 +65,14 @@ exports = module.exports = class Instance
 			{ name: 'remain:second', label: 'Remain Second'      }
 		]) 
 
-		;['track:total', 'track:number', 'group:total', 'group:number'].forEach(name => {
-			this.setNumber('0', name)
-		})
+		this.resetVariables()
+	}
 
-		;['elapse', 'remain'].forEach(name => {
-			this.setTime('0000000', name)
-		})
+	resetVariables () {
+		;['track:total', 'track:number', 'group:total', 'group:number'].forEach(
+			name => { this.setNumber(name) })
+		;['elapse', 'remain'].forEach(
+			base => { this.setTime(base) })
 	}
 
 	destroy () {
@@ -83,24 +84,38 @@ exports = module.exports = class Instance
 
 		if (socket) {
 			this.socket = null
-
 			socket.options.reconnect = false
 			socket.socket.end()
-			socket.destroy()
-		} else if (this.destroySocket) {
+		}
+
+		if ('destroySocket' in this) {
 			this.destroySocket()
 		}
 	}
 
 	config_fields () {
-		return [{
-			type:    'textinput',
-			id:      'address',
-			label:   'Device Address',
-			width:   12,
-			regex:   this.REGEX_IP,
-			tooltip: 'IP Address of the Blu-Ray Player.'
-		}]
+		return [
+			{
+				type:    'textinput',
+				id:      'address',
+				label:   'Device Address',
+				width:   8,
+				regex:   this.REGEX_IP,
+				tooltip: 'IP Address of the Blu-Ray Player.'
+			},
+			{
+				type:    'dropdown',
+				id:      'placeholder',
+				label:   'Variable Placeholder',
+				width:   4,
+				choices: [
+					{ id: '-', label: 'Dash (-)' },
+					{ id: '0', label: 'Zero (0)' }
+				],
+				default: '-',
+				tooltip: 'Character that will be used to fill a variable which is unset.'
+			}
+		]
 	}
 
 	updateConfig (config) {
@@ -138,36 +153,42 @@ exports = module.exports = class Instance
 	}
 
 	onDataReceived (data) {
-		const [, command, response] = data.toString('latin1').match(/^ack\+!7([A-Z]{3})(.+)$/) || []
+		(data.toString('latin1').match(/ack\+!7[A-Z,0-9]+/g) || []).forEach(line => {
+			const [, command, response] = line.match(/^.+7(.{3})(.+)$/) || []
 
-		switch (command) {
-			case 'MST':
-				this.disc = response
-				this.checkFeedbacks('disc')
-				break
-			case 'SST':
-				this.playback = response
-				this.checkFeedbacks('playback')
-				break
-			case 'TTN':
-				this.setNumber(response, 'track:total')
-				break
-			case 'TNM':
-				this.setNumber(response, 'track:number')
-				break
-			case 'TGN':
-				this.setNumber(response, 'group:total')
-				break
-			case 'GNM':
-				this.setNumber(response, 'group:number')
-				break
-			case 'SET':
-				this.setTime(response, 'elapse')
-				break
-			case 'SRT':
-				this.setTime(response, 'remain')
-				break
-		}
+			switch (command) {
+				case 'MST':
+					this.disc = response
+					this.checkFeedbacks('disc')
+					break
+				case 'SST':
+					this.playback = response
+					this.checkFeedbacks('playback')
+	
+					if (['DVHM', 'DVSU'].includes(this.playback)) {
+						this.resetVariables()
+					}
+					break
+				case 'TTN':
+					this.setNumber('track:total', response)
+					break
+				case 'TNM':
+					this.setNumber('track:number', response)
+					break
+				case 'TGN':
+					this.setNumber('group:total', response)
+					break
+				case 'GNM':
+					this.setNumber('group:number', response)
+					break
+				case 'SET':
+					this.setTime('elapse', response)
+					break
+				case 'SRT':
+					this.setTime('remain', response)
+					break
+			}	
+		})
 	}
 
 	nextRequest () {
@@ -186,20 +207,21 @@ exports = module.exports = class Instance
 
 		if (timer) {
 			this.timer = null
-
 			clearTimeout(timer)
 		}
 	}
 
-	setTime (time, base) {
-		const [, h, m, s] = time.match(/^([0-9]{3})([0-9]{2})([0-9]{2})$/) || []
+	setTime (base, time) {
+		const [, h, m, s] = (time || '').match(/^([0-9]{3})([0-9]{2})([0-9]{2})$/) || []
 
-		this.setVariable(base + ':hour',   (Number(h) || 0).toFixed().padStart(2, '0'))
-		this.setVariable(base + ':minute', (Number(m) || 0).toFixed().padStart(2, '0'))
-		this.setVariable(base + ':second', (Number(s) || 0).toFixed().padStart(2, '0'))
+		this.setNumber(base + ':hour',   h)
+		this.setNumber(base + ':minute', m)
+		this.setNumber(base + ':second', s)
 	}
 
-	setNumber (number, name) {
-		this.setVariable(name, (Number(number) || 0).toFixed().padStart(2, '0'))
+	setNumber (name, number) {
+		this.setVariable(name, isNaN(number)
+			? (this.config.placeholder || '-').repeat(2)
+			: Number(number).toFixed().padStart(2, '0'))
 	}
 }
