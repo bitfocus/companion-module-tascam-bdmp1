@@ -11,5 +11,13 @@
 	"description": "TASCAM BD-MP1 Blu-Ray Player",
 	"main": "module.js",
 	"author": "Christian Volmering <christian@volmering.name>",
-	"license": "MIT"
+	"license": "MIT",
+	"homepage": "https://github.com/bitfocus/companion-module-tascam-bdmp1#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-tascam-bdmp1/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git"
+	}
 }
