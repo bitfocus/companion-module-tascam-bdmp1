@@ -55,7 +55,7 @@ exports = module.exports = Base => class extends Base {
 	}
 
 	actions () {
-		this.system.emit('instance_actions', this.id, {
+		this.setActions({
 			'stop': {
 				label:   'Stop'
 			},
