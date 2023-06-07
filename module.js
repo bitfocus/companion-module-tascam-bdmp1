@@ -1,82 +1,96 @@
-const InstanceSkel        = require('../../instance_skel')
-const TcpSocket           = require('../../tcp')
-const InstanceActions     = require('./action')
-const FeedbackDefinitions = require('./feedback')
+import { InstanceBase, runEntrypoint, InstanceStatus, TCPHelper, Regex } from '@companion-module/base'
+import { UpgradeScripts } from './upgrade.js'
+import { ConfigFields } from './config.js'
+import { getActionDefinitions } from './action.js'
+import { getFeedbackDefinitions } from './feedback.js'
+import { getVariableDefinitions } from './variable.js'
 
-exports = module.exports = class Instance
-	extends InstanceActions(FeedbackDefinitions(InstanceSkel)) {
+class BDMP1Instance extends InstanceBase {
 
-	constructor (...args) {
-		super(...args)
+	constructor (internal) {
+		super(internal)
 
-		this.socket   = null
-		this.timer    = null
-		this.requests = ['MST', 'SST', 'STT', 'STC', 'STG', 'SGN', 'SET', 'SRT']
-		this.current  = -1
-		this.disc     = ''
+		this.REGEX_LEVEL_DB = '/^[+-]?[0-9]{1,2}$/'
+
+		this.socket = null
+		this.timer = null
+		this.requests = [ 'MST', 'SST', 'STT', 'STC', 'STG', 'SGN', 'SET', 'SRT' ]
+	}
+
+	async init (config) {
+		this.config = config
+		this.current = -1
+		this.disc = ''
 		this.playback = ''
 
-		this.defineConst('REGEX_LEVEL_DB', '/^[+-]?[0-9]{1,2}$/')
-		this.actions()
-		this.feedbacks()
+		this.updateStatus(InstanceStatus.UnknownWarning, 'Initializing')
+
+		this.setActionDefinitions(getActionDefinitions(this))
+		this.setFeedbackDefinitions(getFeedbackDefinitions(this))
+		this.setVariableDefinitions(getVariableDefinitions(this))
+
+		this.resetVariables()
+		this.openSocket()
 	}
 
-	init () {
-		this.initSocket()
-		this.initVariables()
+	async configUpdated (config) {
+		this.config = config
+
+		this.init(config)
 	}
 
-	initSocket () {
+	async destroy () {
+		this.closeSocket()
+	}
+
+	getConfigFields () {
+		return ConfigFields
+	}
+
+	resetVariables () {
+		;[ 'track_total', 'track_number', 'group_total', 'group_number' ].forEach(id => {
+			this.setNumber(id)
+		})
+
+		;[ 'elapse', 'remain' ].forEach(base => {
+			this.setTime(base)
+		})
+	}
+
+	openSocket () {
 		this.closeSocket()
 
 		if (this.config.address) {
-			const socket = new TcpSocket(this.config.address, 9030)
+			this.updateStatus(InstanceStatus.Connecting)
 
-			socket.on('status_change', (status, message) => {
-				this.status(status, message)
+			const socket = new TCPHelper(this.config.address, 9030)
+
+			socket.on('status_change', status => {
+				if (InstanceStatus.UnknownError !== status) {
+					this.updateStatus(status)
+				}
 			}).on('error', err => {
+				this.updateStatus(InstanceStatus.ConnectionFailure)
 				this.log('error', err.message)
 			}).on('connect', () => {
 				this.socket = socket
+				
 				this.nextRequest()
 			}).on('end', () => {
 				this.socket = null
+
 				this.stopRequest()
 			}).on('data', this.onDataReceived.bind(this))
 
 			this.destroySocket = () => {
 				socket.destroy()
+				socket.removeAllListeners()
+
 				delete this.destroySocket
 			}
+		} else {
+			this.updateStatus(InstanceStatus.BadConfig)
 		}
-	}
-
-	initVariables () {
-		this.setVariableDefinitions([
-			{ name: 'track:total',   label: 'Total Track'        },
-			{ name: 'track:number',  label: 'Track Number'       },
-			{ name: 'group:total',   label: 'Total Group/Title'  },
-			{ name: 'group:number',  label: 'Group/Title Number' },
-			{ name: 'elapse:hour',   label: 'Elapse Hour'        },
-			{ name: 'elapse:minute', label: 'Elapse Minute'      },
-			{ name: 'elapse:second', label: 'Elapse Second'      },
-			{ name: 'remain:hour',   label: 'Remain Hour'        },
-			{ name: 'remain:minute', label: 'Remain Minute'      },
-			{ name: 'remain:second', label: 'Remain Second'      }
-		]) 
-
-		this.resetVariables()
-	}
-
-	resetVariables () {
-		;['track:total', 'track:number', 'group:total', 'group:number'].forEach(
-			name => { this.setNumber(name) })
-		;['elapse', 'remain'].forEach(
-			base => { this.setTime(base) })
-	}
-
-	destroy () {
-		this.closeSocket()
 	}
 
 	closeSocket () {
@@ -84,6 +98,7 @@ exports = module.exports = class Instance
 
 		if (socket) {
 			this.socket = null
+
 			socket.options.reconnect = false
 			socket.socket.end()
 		}
@@ -93,68 +108,15 @@ exports = module.exports = class Instance
 		}
 	}
 
-	config_fields () {
-		return [
-			{
-				type:    'textinput',
-				id:      'address',
-				label:   'Device Address',
-				width:   8,
-				regex:   this.REGEX_IP,
-				tooltip: 'IP Address of the Blu-Ray Player.'
-			},
-			{
-				type:    'dropdown',
-				id:      'placeholder',
-				label:   'Variable Placeholder',
-				width:   4,
-				choices: [
-					{ id: '-', label: 'Dash (-)' },
-					{ id: '0', label: 'Zero (0)' }
-				],
-				default: '-',
-				tooltip: 'Character that will be used to fill a variable which is unset.'
-			}
-		]
-	}
-
-	updateConfig (config) {
-		this.config = config
-		this.init()
-	}
-
-	action (action) {
-		this.sendCommand(this.commands[action.action](action.options))
-	}
-
-	feedback (feedback) {
-		const options  = feedback.options
-		const operator = options.negatestatus ? '!==' : '==='
-		const style    = { color: options.foreground, bgcolor: options.background }
-
-		if (options.buttontext) {
-			style.text = options.buttontext
-		}
-
-		switch (feedback.type) {
-			case 'disc':
-				return eval('this.disc' + operator + 'options.disc') ? style : {}
-			case 'playback':
-				return eval('this.playback' + operator + 'options.playback') ? style : {}
-			default:
-				return {}
-		}
-	}
-
 	sendCommand (command) {
 		if (this.socket) {
-			this.socket.write(Buffer.from('!7' + command + '\r', 'latin1'))
+			this.socket.send(Buffer.from('!7' + command + '\r', 'latin1'))
 		}
 	}
 
 	onDataReceived (data) {
 		(data.toString('latin1').match(/ack\+!7[A-Z,0-9]+/g) || []).forEach(line => {
-			const [, command, response] = line.match(/^.+7(.{3})(.+)$/) || []
+			const [ , command, response ] = line.match(/^.+7(.{3})(.+)$/) || []
 
 			switch (command) {
 				case 'MST':
@@ -165,21 +127,21 @@ exports = module.exports = class Instance
 					this.playback = response
 					this.checkFeedbacks('playback')
 	
-					if (['DVHM', 'DVSU'].includes(this.playback)) {
+					if ([ 'DVHM', 'DVSU' ].includes(this.playback)) {
 						this.resetVariables()
 					}
 					break
 				case 'TTN':
-					this.setNumber('track:total', response)
+					this.setNumber('track_total', response)
 					break
 				case 'TNM':
-					this.setNumber('track:number', response)
+					this.setNumber('track_number', response)
 					break
 				case 'TGN':
-					this.setNumber('group:total', response)
+					this.setNumber('group_total', response)
 					break
 				case 'GNM':
-					this.setNumber('group:number', response)
+					this.setNumber('group_number', response)
 					break
 				case 'SET':
 					this.setTime('elapse', response)
@@ -212,16 +174,19 @@ exports = module.exports = class Instance
 	}
 
 	setTime (base, time) {
-		const [, h, m, s] = (time || '').match(/^([0-9]{3})([0-9]{2})([0-9]{2})$/) || []
+		const [ , h, m, s ] = (time || '').match(/^([0-9]{3})([0-9]{2})([0-9]{2})$/) || []
 
-		this.setNumber(base + ':hour',   h)
-		this.setNumber(base + ':minute', m)
-		this.setNumber(base + ':second', s)
+		this.setNumber(base + '_hour',   h)
+		this.setNumber(base + '_minute', m)
+		this.setNumber(base + '_second', s)
 	}
 
-	setNumber (name, number) {
-		this.setVariable(name, isNaN(number)
-			? (this.config.placeholder || '-').repeat(2)
-			: Number(number).toFixed().padStart(2, '0'))
+	setNumber (id, value) {
+		this.setVariableValues({ [ id ] : (
+			isNaN(value) ? (this.config.placeholder || '-').repeat(2)
+				: Number(value).toFixed().padStart(2, '0')
+		)})
 	}
 }
+
+runEntrypoint(BDMP1Instance, UpgradeScripts)
