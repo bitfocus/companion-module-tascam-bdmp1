@@ -1,8 +1,13 @@
 # TASCAM BD-MP1 Blu-Ray Player
 *Companion Module*
 
-## Note
-Only one client connection at a time can be made.
+## WARNING: Update from Companion 2.x to 3.x
+If you are updating from Companion 2.x you might have to correct your variables manually.
+Companion 3.x doesn't allow the colon inside variable names anymore and thus all variables have been renamed using the underscore as a replacement.
+Also the module uses the new boolean feedbacks now which should have been automatically upgraded.
+
+## NOTE
+Only one client connection can be made at a time.
 
 ## Dynamic Variables
 | Variable | Description |
