@@ -1,20 +1,23 @@
-export async function getActionDefinitions (self) {
+export function getActionDefinitions (self) {
 	return {
 		'stop': {
 			name: 'Stop',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('STP')
 			}
 		},
 		'play': {
 			name: 'Play',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('PLY')
 			}
 		},
 		'pause': {
 			name: 'Pause',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('PAS')
 			}
 		},
@@ -32,19 +35,21 @@ export async function getActionDefinitions (self) {
 					default: 1
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('SKP' + Number(action.options.chapter).toFixed().padStart(4, '0'))
 			}
 		},
 		'chapter_jump_next': {
 			name: 'Track/Chapter Jump Next',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('SKPNX')
 			}
 		},
 		'chapter_jump_prev': {
 			name: 'Track/Chapter Jump Prev',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('SKPPV')
 			}
 		},
@@ -62,19 +67,21 @@ export async function getActionDefinitions (self) {
 					default: 1
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('GSK' + Number(action.options.title).toFixed().padStart(4, '0'))
 			}
 		},
 		'title_jump_next': {
 			name: 'Title Jump Next',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('GSKNX')
 			}
 		},
 		'title_jump_prev': {
 			name: 'Title Jump Prev',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('GSKPV')
 			}
 		},
@@ -96,7 +103,7 @@ export async function getActionDefinitions (self) {
 					default: 'TL'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('TMD' + action.options.code)
 			}
 		},
@@ -116,37 +123,42 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('OSD' + action.options.hide)
 			}
 		},
 		'setup_menu': {
 			name: 'Setup Menu',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('SMN')
 			}
 		},
 		'top_menu': {
 			name: 'Top Menu (Disc Menu)',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('TMN')
 			}
 		},
 		'option_menu': {
 			name: 'Option Menu',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('OMN')
 			}
 		},
 		'pop_up_menu': {
 			name: 'Pop Up Menu',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('PMN')
 			}
 		},
 		'return': {
 			name: 'Return',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('RET')
 			}
 		},
@@ -166,19 +178,21 @@ export async function getActionDefinitions (self) {
 					default: '+'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('ADG' + action.options.code)
 			}
 		},
 		'subtitle': {
 			name: 'Subtitle',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('SBT1')
 			}
 		},
 		'enter': {
 			name: 'Enter',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('ENT')
 			}
 		},
@@ -198,7 +212,7 @@ export async function getActionDefinitions (self) {
 					default: 'OP'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('OPC' + action.options.tray)
 			}
 		},
@@ -222,13 +236,14 @@ export async function getActionDefinitions (self) {
 					default: '1'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('RSC' + action.options.resolution)
 			}
 		},
 		'display_info': {
 			name: 'Display/Info',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('DSP')
 			}
 		},
@@ -250,13 +265,14 @@ export async function getActionDefinitions (self) {
 					default: '1'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('CBC' + action.options.color)
 			}
 		},
 		'home': {
 			name: 'Home',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('HOM')
 			}
 		},
@@ -274,7 +290,7 @@ export async function getActionDefinitions (self) {
 					default: 0
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('NUM' + action.options.number)
 			}
 		},
@@ -304,7 +320,7 @@ export async function getActionDefinitions (self) {
 					default: 'f'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('SCN' + action.options.direction + action.options.speed)
 			}
 		},
@@ -323,7 +339,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('MUT' + action.options.mute)
 			}
 		},
@@ -342,7 +358,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('APL' + action.options.suffix)
 			}
 		},
@@ -361,7 +377,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('PMK' + action.options.suffix)
 			}
 		},
@@ -380,7 +396,7 @@ export async function getActionDefinitions (self) {
 					default: 'AT'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('3DO' + action.options.suffix)
 			}
 		},
@@ -401,7 +417,7 @@ export async function getActionDefinitions (self) {
 					default: '9W'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('ASC' + action.options.suffix)
 			}
 		},
@@ -421,7 +437,7 @@ export async function getActionDefinitions (self) {
 					default: 'NT'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('TVS' + action.options.suffix)
 			}
 		},
@@ -440,7 +456,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('R1K' + action.options.suffix)
 			}
 		},
@@ -461,7 +477,7 @@ export async function getActionDefinitions (self) {
 					default: 'RV'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('CLS' + action.options.suffix)
 			}
 		},
@@ -482,7 +498,7 @@ export async function getActionDefinitions (self) {
 					default: '48'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('DPC' + action.options.suffix)
 			}
 		},
@@ -501,7 +517,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('SCA' + action.options.suffix)
 			}
 		},
@@ -521,7 +537,7 @@ export async function getActionDefinitions (self) {
 					default: '48'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('COO' + action.options.suffix)
 			}
 		},
@@ -545,7 +561,7 @@ export async function getActionDefinitions (self) {
 					default: '21'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('SPC' + action.options.configuration)
 			}
 		},
@@ -596,7 +612,7 @@ export async function getActionDefinitions (self) {
 					default: 0
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('SPS'
 					+ action.options.type 
 					+ action.options.size
@@ -619,7 +635,7 @@ export async function getActionDefinitions (self) {
 					default: 'US'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('FWU' + action.options.suffix)
 			}
 		},
@@ -638,13 +654,14 @@ export async function getActionDefinitions (self) {
 					default: 'H1'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('CCR' + action.options.suffix)
 			}
 		},
 		'factory_reset': {
 			name: 'Reset Factory Defaults',
-			callback: async () => {
+            options: [],
+			callback: () => {
 				self.sendCommand('INI')
 			}
 		},
@@ -664,7 +681,7 @@ export async function getActionDefinitions (self) {
 					default: '00'
 				}
 			],
-			callback: async action => {
+			callback: action => {
 				self.sendCommand('LNA' + action.options.suffix)
 			}
 		}

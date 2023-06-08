@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
 
-export async function getFeedbackDefinitions (self) {
+export function getFeedbackDefinitions (self) {
 	return {
 		'disc': {
 			name: 'Disc Status',

@@ -17,7 +17,7 @@ class BDMP1Instance extends InstanceBase {
 		this.requests = [ 'MST', 'SST', 'STT', 'STC', 'STG', 'SGN', 'SET', 'SRT' ]
 	}
 
-	async init (config) {
+	init (config) {
 		this.config = config
 		this.current = -1
 		this.disc = ''
@@ -33,13 +33,13 @@ class BDMP1Instance extends InstanceBase {
 		this.openSocket()
 	}
 
-	async configUpdated (config) {
+	configUpdated (config) {
 		this.config = config
 
 		this.init(config)
 	}
 
-	async destroy () {
+	destroy () {
 		this.closeSocket()
 	}
 
