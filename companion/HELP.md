@@ -52,7 +52,7 @@ Only one client connection can be made at a time.
 | **Home** ||
 | **Ten Key** | Number (0-9) |
 | **Slow/Search** | Direction (Forward, Reverse) |
-|                 | Search Speed (Fast, Slow) |
+|| Search Speed (Fast, Slow) |
 | **Mute** | On/Off (Mute on, Mute off) |
 | **Auto Play** | Auto Play (On, Off) |
 | **PIP Mark** | PIP Mark (On, Off) |
@@ -66,9 +66,9 @@ Only one client connection can be made at a time.
 | **Fs Setting** | Fs Setting (48k LPCM, 96k LPCM, 192k LPCM) |
 | **Speaker Configuration** | Speaker/Woofer Number (2.1Ch, 3.1Ch, 4.1Ch, 5.1Ch, 6.1Ch, 7.1Ch) |
 | **SC Speaker Setting** | Type (Center, Left, Right, Left Surround, Right Surround) |
-|                        | Size (Large, Small) |
-|                        | Level (Example: -01 = -1dB, +10 = +10dB) |
-|                        | Delay (0-9999ms) |
+|| Size (Large, Small) |
+|| Level (Example: -01 = -1dB, +10 = +10dB) |
+|| Delay (0-9999ms) |
 | **Firmware Upgrade** | Firmware Upgrade (Via USB, Via Disc) |
 | **HDMI CEC** | HDMI CEC (HDMI1, Off) |
 | **Reset Factory Defaults** ||
@@ -78,9 +78,9 @@ Only one client connection can be made at a time.
 | Feedback | Parameters |
 | --- | --- |
 | **Disc Status** | Disc Status (There is no disc media, There is disc media, Mounted media is unformatted, Disc tray is opening or open, Disc tray is closing or closed, Disc tray error) |
-|                 | Negate Status |
+|| Negate Status |
 | **Status** | Status (Play, Pause, Slow play reverse, Slow play forward, Search play reverse, Search play forward, Step play, FS play, Menu setting is displayed, Setup mode, Track/Root menu, Home menu) |
-|            | Negate Status |
+|| Negate Status |
 
 * * *
 

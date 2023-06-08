@@ -1,29 +1,29 @@
 {
-	"name": "tascam-bdmp1",
-	"version": "0.2.0",
-	"keywords": [
-		"Media"
-	],
-	"manufacturer": "Tascam",
-	"product": "BD-MP1",
-	"shortname": "bdmp1",
-	"description": "TASCAM BD-MP1 Blu-Ray Player",
-	"type": "module",
-	"main": "module.js",
-	"author": "Christian Volmering <christian@volmering.name>",
-	"license": "MIT",
-	"dependencies": {
-		"@companion-module/base": "~1.4.0"
-	},
-	"devDependencies": {
-		"@companion-module/tools": "^1.2.0"
-	},
-	"homepage": "https://github.com/bitfocus/companion-module-tascam-bdmp1#readme",
-	"bugs": {
-		"url": "https://github.com/bitfocus/companion-module-tascam-bdmp1/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git"
-	}
+    "name": "tascam-bdmp1",
+    "version": "0.2.0",
+    "keywords": [
+        "Media"
+    ],
+    "manufacturer": "Tascam",
+    "product": "BD-MP1",
+    "shortname": "bdmp1",
+    "description": "TASCAM BD-MP1 Blu-Ray Player",
+    "type": "module",
+    "main": "module.js",
+    "author": "Christian Volmering <christian@volmering.name>",
+    "license": "MIT",
+    "dependencies": {
+        "@companion-module/base": "~1.4.0"
+    },
+    "devDependencies": {
+        "@companion-module/tools": "^1.2.0"
+    },
+    "homepage": "https://github.com/bitfocus/companion-module-tascam-bdmp1#readme",
+    "bugs": {
+        "url": "https://github.com/bitfocus/companion-module-tascam-bdmp1/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git"
+    }
 }

@@ -1,5 +1,5 @@
 export function getVariableDefinitions (self) {
-	return [
+    return [
         { variableId: 'track_total', name: 'Total Track' },
         { variableId: 'track_number', name: 'Track Number' },
         { variableId: 'group_total', name: 'Total Group/Title' },

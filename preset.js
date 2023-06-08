@@ -1,11 +1,11 @@
 import { combineRgb } from '@companion-module/base'
 
 export function getPresetDefinitions (self) {
-	return {
+    return {
         'play': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Play',
+            category: 'Playback',
+            name: 'Play',
             style: {
                 text: '⏵',
                 size: 'auto',
@@ -19,11 +19,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'stop': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Stop',
+            category: 'Playback',
+            name: 'Stop',
             style: {
                 text: '⏹',
                 size: 'auto',
@@ -37,11 +37,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'pause': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Pause',
+            category: 'Playback',
+            name: 'Pause',
             style: {
                 text: '⏸',
                 size: 'auto',
@@ -55,11 +55,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'prev': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Previous',
+            category: 'Playback',
+            name: 'Previous',
             style: {
                 text: '⏮',
                 size: 'auto',
@@ -73,11 +73,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'next': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Next',
+            category: 'Playback',
+            name: 'Next',
             style: {
                 text: '⏭',
                 size: 'auto',
@@ -91,11 +91,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'reverse': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Reverse',
+            category: 'Playback',
+            name: 'Reverse',
             style: {
                 text: '⏪',
                 size: 'auto',
@@ -113,11 +113,11 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
         'forward': {
             type: 'button',
-	        category: 'Playback',
-			name: 'Forward',
+            category: 'Playback',
+            name: 'Forward',
             style: {
                 text: '⏩',
                 size: 'auto',
@@ -135,6 +135,6 @@ export function getPresetDefinitions (self) {
                     up: [],
             }],
             feedbacks: []
-		},
+        },
     }
 }
