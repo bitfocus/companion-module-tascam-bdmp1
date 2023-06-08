@@ -4,6 +4,7 @@ import { ConfigFields } from './config.js'
 import { getActionDefinitions } from './action.js'
 import { getFeedbackDefinitions } from './feedback.js'
 import { getVariableDefinitions } from './variable.js'
+import { getPresetDefinitions } from './preset.js'
 
 class BDMP1Instance extends InstanceBase {
 
@@ -28,6 +29,7 @@ class BDMP1Instance extends InstanceBase {
 		this.setActionDefinitions(getActionDefinitions(this))
 		this.setFeedbackDefinitions(getFeedbackDefinitions(this))
 		this.setVariableDefinitions(getVariableDefinitions(this))
+        this.setPresetDefinitions(getPresetDefinitions(this))
 
 		this.resetVariables()
 		this.openSocket()
