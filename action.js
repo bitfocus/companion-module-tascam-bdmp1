@@ -343,6 +343,28 @@ export function getActionDefinitions (self) {
                 self.sendCommand('MUT' + action.options.mute)
             }
         },
+        'cursor': {
+            name: 'Cursor',
+            options: [
+                {
+                    type: 'dropdown',
+                    label: 'Direction',
+                    tooltip: 'Direction of cursor movement',
+                    id: 'direction',
+                    required: true,
+                    choices: [
+                        { id: '1', label: 'Left' },
+                        { id: '2', label: 'Right' },
+                        { id: '3', label: 'Up' },
+                        { id: '4', label: 'Down' }
+                    ],
+                    default: '1'
+                }
+            ],
+            callback: action => {
+                self.sendCommand('OSD' + action.options.direction)
+            }
+        },
         'auto_play': {
             name: 'Auto Play',
             options: [

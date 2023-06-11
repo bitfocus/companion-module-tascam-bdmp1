@@ -54,6 +54,7 @@ Only one client connection can be made at a time.
 | **Slow/Search** | Direction (Forward, Reverse) |
 || Search Speed (Fast, Slow) |
 | **Mute** | On/Off (Mute on, Mute off) |
+| **Cursor** | Direction (Left, Right, Up, Down) |
 | **Auto Play** | Auto Play (On, Off) |
 | **PIP Mark** | PIP Mark (On, Off) |
 | **3D Output** | 3D Output (Auto, Off) |
