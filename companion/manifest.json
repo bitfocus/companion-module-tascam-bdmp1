@@ -3,7 +3,7 @@
 	"name": "tascam-bdmp1",
 	"shortname": "bdmp1",
 	"description": "TASCAM BD-MP1 Blu-Ray Player",
-	"version": "0.2.0",
+	"version": "1.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git",
 	"bugs": "https://github.com/bitfocus/companion-module-tascam-bdmp1/issues",
