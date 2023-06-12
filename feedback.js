@@ -32,11 +32,11 @@ export function getFeedbackDefinitions (self) {
                     default: false
                 }
             ],
-            callback: feedback => {
-                return eval('self.disc'
-                    + (feedback.options.negatestatus ? '!==' : '===')
-                    + 'feedback.options.disc')
-            }
+            callback: feedback => (
+                feedback.options.negatestatus
+                    ? self.disc !== feedback.options.disc
+                    : self.disc === feedback.options.disc
+            )
         },
         'playback': {
             name: 'Playback Status',
@@ -74,11 +74,11 @@ export function getFeedbackDefinitions (self) {
                     default: false
                 }
             ],
-            callback: feedback => {
-                return eval('self.playback'
-                    + (feedback.options.negatestatus ? '!==' : '===')
-                    + 'feedback.options.playback')
-            }
+            callback: feedback => (
+                feedback.options.negatestatus
+                    ? self.playback !== feedback.options.playback
+                    : self.playback === feedback.options.playback
+            )
         }
     }
 }
