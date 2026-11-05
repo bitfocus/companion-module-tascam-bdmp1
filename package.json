@@ -1,17 +1,17 @@
 {
-    "name": "tascam-bdmp1",
-    "version": "1.0.0",
-    "type": "module",
-    "main": "module.js",
-    "license": "MIT",
-    "dependencies": {
-        "@companion-module/base": "~1.4.0"
-    },
-    "devDependencies": {
-        "@companion-module/tools": "^2.8.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git"
-    }
+	"name": "tascam-bdmp1",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "module.js",
+	"license": "MIT",
+	"dependencies": {
+		"@companion-module/base": "~1.15.1"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^2.9.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-tascam-bdmp1.git"
+	}
 }
