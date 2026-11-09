@@ -14,7 +14,7 @@
 		}
 	],
 	"runtime": {
-		"type": "node18",
+		"type": "node26",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../module.js"
@@ -22,9 +22,9 @@
 	"legacyIds": [],
 	"manufacturer": "Tascam",
 	"products": [
-        "BD-MP1"
-    ],
+		"BD-MP1"
+	],
 	"keywords": [
-        "Media"
-    ]
+		"Media"
+	]
 }
